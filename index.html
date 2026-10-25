@@ -391,7 +391,8 @@ body.done #ok2{display:block}
 
 <script>
 (function(){
-  var ENDPOINT = "https://formsubmit.co/ajax/beasuances17@gmail.com"; /* las respuestas llegan por correo */
+  var ENDPOINT = "https://formsubmit.co/ajax/a07e73fafeab8d9d7e1ce25087b10d15";
+  var SHEET_URL = "https://script.google.com/macros/s/AKfycbzu8_1ylx_qSO_pu8K7AILR1wA_AvtBEBZCGocHfTAkiERyS6gwzEH1d4PimcZTNFBfHw/exec"; /* las respuestas llegan por correo */
   var n = new URLSearchParams(location.search).get("n");
   var hero = document.getElementById("bgsrc");
   if (hero) document.documentElement.style.setProperty("--bgphoto", 'url("' + hero.src + '")');
@@ -446,6 +447,7 @@ body.done #ok2{display:block}
       var nombre = data.nombre || "";
       data._subject = extra.tipo === "rsvp" ? ("Confirmación boda" + (nombre ? " · " + nombre : "") + (data.asiste ? " · " + data.asiste : "")) : ("Cuestionario boda" + (nombre ? " · " + nombre : ""));
       data._template = "table"; data._captcha = "false";
+      try { fetch(SHEET_URL, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"}, body: JSON.stringify(data)}); } catch(err){}
       try { fetch(ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json","Accept":"application/json"}, body: JSON.stringify(data)}).then(done, done); } catch(err){ done(); }
     });
   }
